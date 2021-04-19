@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TodosDispatch } from "../App";
+import { TodosDispatch } from "../views/Home";
 
 function TodoItem(props) {
   const dispatch = useContext(TodosDispatch);

@@ -1,6 +1,7 @@
 import TodoItem from "./TodoItem";
 
 function TodoList(props) {
+  console.log(props);
   return (
     <section className="main">
       <ul className="todo-list">
