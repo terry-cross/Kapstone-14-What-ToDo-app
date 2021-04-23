@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Profiles = () => {
   return (
-    <div style={{ backgroundColor: "black", width: "100%" }}>
+    <div id="main" style={{ backgroundColor: "black", width: "100%" }}>
       <div
         style={{
           display: "flex",
@@ -34,9 +34,17 @@ const Profiles = () => {
               width: "115%",
             }}
           >
-            <h5>Todos Completed:</h5>
-            <h5>Todos on List:</h5>
-            <h5>Todos not Completed:</h5>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <h5>Todos Completed:</h5>
+              <h5 style={{ position: "relative", top: "76px", right: "105px" }}>
+                Todos on List:
+              </h5>
+              <h5
+                style={{ position: "relative", top: "156px", right: "185px" }}
+              >
+                Todos not Completed:
+              </h5>
+            </div>
           </div>
         </div>
         <div>
