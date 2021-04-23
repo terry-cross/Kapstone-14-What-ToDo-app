@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Home from "./views/Home";
 import LoginPage from "./views/LoginPage";
 import Profiles from "./components/Profiles";
+import EditProfile from "./views/EditProfile";
 
 function App() {
   const [state, dispatch] = useReducer(todoReducer, {
@@ -36,6 +37,7 @@ function App() {
     <Switch>
       <Route exact path="/" component={LoginPage} />
       <Route exact path="/profile" component={Profiles} />
+      <Route exact path="/editprofile" component={EditProfile} />
       <Route
         exact
         path="/todo"
