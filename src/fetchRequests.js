@@ -1,8 +1,8 @@
-const baseURL = "https://localhost:4000";
+const baseURL = "http://localhost:4000";
 
 export const loginRequest = (username, password) => {
   return fetch(baseURL + "/login/user", {
-    method: "get",
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       username,
@@ -20,12 +20,12 @@ export const logoutRequest = (token) => {
 export const createUserRequest = (username, password) => {
   return fetch(baseURL + "/user/create", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({
       username,
       password,
     }),
-  }).then((res) => res.json());
+  }).then((res) => console.log(res));
 };
 
 export const editUserRequest = (
