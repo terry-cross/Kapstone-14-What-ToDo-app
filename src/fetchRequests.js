@@ -1,8 +1,8 @@
-const baseURL = "https://socialapp-api.herokuapp.com/";
+const baseURL = "https://localhost:4000";
 
 export const loginRequest = (username, password) => {
-  return fetch(baseURL + "auth/login", {
-    method: "POST",
+  return fetch(baseURL + "/login/user", {
+    method: "get",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       username,
@@ -12,71 +12,109 @@ export const loginRequest = (username, password) => {
 };
 
 export const logoutRequest = (token) => {
-  return fetch(baseURL + "auth/logout", {
+  return fetch(baseURL + "/logout", {
     headers: { Authorization: "Bearer " + token },
   }).then((res) => res.json());
 };
 
-export const messageRequest = () => {
-  return fetch(baseURL + "messages?limit=100").then((res) => res.json());
-};
-
-export const postMessageReq = (token, message) => {
-  return fetch(baseURL + "messages", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      text: message,
-    }),
-  }).then((res) => res.json());
-};
-
-export const createUserRequest = (username, password, displayName) => {
-  return fetch(baseURL + "user", {
+export const createUserRequest = (username, password) => {
+  return fetch(baseURL + "/user/create", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       username,
       password,
-      displayName,
     }),
   }).then((res) => res.json());
 };
 
-export const addLike = (token, messageId) => {
-  return fetch(baseURL + "likes", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      messageId,
-    }),
-  }).then((res) => res.json());
-};
-
-export const removeLike = (token, messageId) => {
-  return fetch(baseURL + "likes/" + messageId, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  }).then((res) => res.json());
-};
-
-export const editUserRequest = (username, password, about, displayName) => {
+export const editUserRequest = (
+  username,
+  firstName,
+  lastName,
+  email,
+  phoneNumber
+) => {
   return fetch(baseURL + "/user", {
-    method: "PACH",
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       username,
-      password,
-      about,
-      displayName,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
     }),
+  }).then((res) => res.json());
+};
+
+export const getProfile = (userId) => {
+  return fetch(baseURL + `/user/${userId}`, {
+    method: "GET",
+  }).then((res) => res.json());
+};
+
+export const deleteUser = (userId) => {
+  return fetch(baseURL + `/user/${userId}`, {
+    method: "DELETE",
+  }).then((res) => res.json());
+};
+
+export const getAllUsers = () => {
+  return fetch(baseURL + "/users", {
+    method: "GET",
+  }).then((res) => res.json());
+};
+
+export const getUserTodos = (userId) => {
+  return fetch(baseURL + `/user/${userId}/todos`, {
+    method: "GET",
+  }).then((res) => res.json());
+};
+
+export const getSingleTodo = (userId, todoId) => {
+  return fetch(baseURL + `/user/${userId}/todo/${todoId}`, {
+    method: "GET",
+  }).then((res) => res.json());
+};
+
+export const createTodo = (userId, title, details, priority, tag) => {
+  return fetch(baseURL + `/user/${userId}/todos/create`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title,
+      details,
+      priority,
+      tag,
+    }),
+  }).then((res) => res.json());
+};
+
+export const editTodo = (
+  userId,
+  todoId,
+  title,
+  details,
+  completed,
+  priority,
+  tag
+) => {
+  return fetch(baseURL + `/user/${userId}/todos/${todoId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title,
+      details,
+      completed,
+      priority,
+      tag,
+    }),
+  }).then((res) => res.json());
+};
+
+export const deleteTodo = (userId, todoId) => {
+  return fetch(baseURL + `/user/${userId}/todos/${todoId}`, {
+    method: "DELETE",
   }).then((res) => res.json());
 };
