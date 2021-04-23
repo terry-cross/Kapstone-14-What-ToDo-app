@@ -3,6 +3,16 @@ import { Link } from "react-router-dom";
 import CreateUser from "./CreateUser";
 import { loginRequest } from "../fetchRequests";
 import { LOGIN, useStore } from "../store";
+import {
+  Container,
+  Form,
+  // Col,
+  Row,
+  // Jumbotron,
+  Button,
+  FormGroup,
+} from "react-bootstrap";
+
 
 function Login(props) {
   const dispatch = useStore((state) => state.dispatch);
@@ -43,53 +53,65 @@ function Login(props) {
 
   return (
     <>
-      <div>
-        <form id="login-form" onSubmit={handleLogin}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            autoFocus
-            required
-            onChange={handleChange}
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            required
-            onChange={handleChange}
-          />
-          <button
-            style={{
-              marginLeft: 10 + "px",
-            }}
-            type="submit"
+      <Container>
+      <div class="d-flex p-4 bg-warning text-dark">
+        <Row>
+          <Form>
+            <Form.Group>
+              <Form.Label>
+                <h3>User Name</h3>
+              </Form.Label>
+              <Form.Control placeholder="Enter Username"></Form.Control>
+              <Form.Row>
+                <Form.Label>
+                  <h3>Password</h3>
+                </Form.Label>
+                <Form.Control placeholder="Enter Password"></Form.Control>
+              </Form.Row>
+            </Form.Group>
+          </Form>
+        </Row>
+        </div>
+       
+        <div class="d-inline-flex p5 justify-content-center bg-secondary text-white">
+        <div className="logInBtn">
+          <a
+            class="btn btn-block btn-primary font-weight-medium auth-form-btn"
+            href="../../todo"
           >
-            Login
-          </button>
-        </form>
-        <button
-          style={{
-            marginLeft: 10 + "px",
-          }}
-          onClick={googleLogin}
-        >
-          Google Login
-        </button>
-        <Link path="/createusers">
-          <button
+            LOGIN
+          </a>
+        </div>
+        <div className="googleBtn">
+        {/* <div class="p-2 flex-fill"> */}
+          <Button
+            href="#"
+            variant="google Login"
+            size="sm"
+            className="btn btn-block btn-google auth-form-btn btn-danger active"
+            onClick={googleLogin}
+          >
+            Google Login
+          </Button>
+          {""}
+          {/* </div> */}
+        <Link path="/createUsers">
+        {/* <div class="p-2 flex-fill"> */}
+          <Button
             style={{
-              marginLeft: 10 + "px",
+              background: "green",
             }}
             onClick={CreateUser}
           >
             Create User
-          </button>
+          </Button>
+          {/* </div> */}
         </Link>
-      </div>
+        </div>
+        </div>
+      </Container>
+
+      {/* </div> */}
     </>
   );
 }
