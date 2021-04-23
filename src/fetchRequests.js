@@ -78,15 +78,12 @@ export const getSingleTodo = (userId, todoId) => {
   }).then((res) => res.json());
 };
 
-export const createTodo = (userId, title, details, priority, tag) => {
+export const createTodo = (userId, title, key) => {
   return fetch(baseURL + `/user/${userId}/todos/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       title,
-      details,
-      priority,
-      tag,
     }),
   }).then((res) => res.json());
 };

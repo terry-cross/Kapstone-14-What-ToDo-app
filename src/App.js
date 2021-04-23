@@ -15,7 +15,7 @@ import CreateUser from "./components/CreateUser";
 
 function App() {
   const [state, dispatch] = useReducer(todoReducer, {
-    todos: todosList,
+    todos: [],
     input: "",
   });
 
