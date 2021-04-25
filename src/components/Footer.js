@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { TodosDispatch } from "../views/Home";
+import { TodosDispatch } from "../App";
 
 function Footer(props) {
   const dispatch = useContext(TodosDispatch);

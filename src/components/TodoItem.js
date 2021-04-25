@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TodosDispatch } from "../views/Home";
+import { TodosDispatch } from "../App";
 
 function TodoItem(props) {
   const dispatch = useContext(TodosDispatch);
@@ -11,16 +11,14 @@ function TodoItem(props) {
           className="toggle"
           type="checkbox"
           checked={props.completed}
-          onClick={(e) => {
-            dispatch({ type: "toggleComplete", todoId: props.id });
-          }}
+          onClick={(e) =>
+            props.handleCheck(e, props.id, props.title, props.completed)
+          }
         />
         <label>{props.title}</label>
         <button
           className="destroy"
-          onClick={(e) => {
-            dispatch({ type: "delete", todoId: props.id });
-          }}
+          onClick={(e) => props.handleDelete(e, props.id)}
         />
       </div>
     </li>
