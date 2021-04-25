@@ -9,10 +9,13 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Home from "./views/Home";
 import LoginPage from "./views/LoginPage";
+import Profiles from "./components/Profiles";
+import EditProfile from "./views/EditProfile";
+import CreateUser from "./components/CreateUser";
 
 function App() {
   const [state, dispatch] = useReducer(todoReducer, {
-    todos: todosList,
+    todos: [],
     input: "",
   });
 
@@ -34,6 +37,9 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={LoginPage} />
+      <Route path="/createUser" component={CreateUser} />
+      <Route exact path="/profile" component={Profiles} />
+      <Route exact path="/editprofile" component={EditProfile} />
       <Route
         exact
         path="/todo"

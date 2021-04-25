@@ -15,7 +15,7 @@ function Login(props) {
   const handleLogin = (e) => {
     e.preventDefault();
     loginRequest(formData.username, formData.password).then((userData) =>
-      dispatch({ type: LOGIN, payload: userData })
+      dispatch({ type: LOGIN, payload: userData.id })
     );
   };
 
@@ -62,29 +62,30 @@ function Login(props) {
             required
             onChange={handleChange}
           />
-          <button
-            style={{
-              marginLeft: 10 + "px",
-            }}
-            type="submit"
-          >
-            Login
-          </button>
+          <Link to="/todo">
+            <button
+              style={{
+                marginLeft: 10 + "px",
+              }}
+              type="submit"
+            >
+              Login
+            </button>
+          </Link>
         </form>
-        <button
+        {/* <button
           style={{
             marginLeft: 10 + "px",
           }}
           onClick={googleLogin}
         >
           Google Login
-        </button>
-        <Link path="/createusers">
+        </button> */}
+        <Link to="/createUser">
           <button
             style={{
               marginLeft: 10 + "px",
             }}
-            onClick={CreateUser}
           >
             Create User
           </button>

@@ -1,3 +1,5 @@
+import { createTodo } from "./fetchRequests";
+
 export default function todoReducer(state, action) {
   const UPDATE_INPUT = "updateInput";
   const CREATE = "create";
@@ -9,17 +11,19 @@ export default function todoReducer(state, action) {
     case UPDATE_INPUT:
       return { ...state, input: action.text };
     case CREATE:
-      return {
-        ...state,
-        todos: [
-          ...state.todos,
-          {
-            id: Date.now(),
-            title: state.input,
-            completed: false,
-          },
-        ],
-      };
+      console.log("hi");
+      return createTodo(action.payload);
+    // return {
+    //   ...state,
+    //   todos: [
+    //     ...state.todos,
+    //     {
+    //       id: Date.now(),
+    //       title: state.input,
+    //       completed: false,
+    //     },
+    //   ],
+    // };
     case TOGGLE_COMPLETE:
       return {
         ...state,

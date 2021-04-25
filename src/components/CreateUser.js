@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { CREATE, useStore } from "../store";
 import { createUserRequest } from "../fetchRequests";
+import { Link } from "react-router-dom";
 
 function CreateUser(props) {
   const dispatch = useStore((state) => state.dispatch);
 
   const [formData, setFormData] = useState({
-    usersname: "",
+    username: "",
     password: "",
   });
 
   const handleSignup = (e) => {
     e.preventDefault();
-    createUserRequest(
-      formData.username,
-      formData.password,
-      formData.displayName
-    ).then((userData) => dispatch({ type: CREATE, payload: userData }));
+    createUserRequest(formData.username, formData.password);
+    // .then((userData) =>
+    // dispatch({ type: CREATE })
+    // );
   };
 
   const handleChange = (e) => {
@@ -45,14 +45,10 @@ function CreateUser(props) {
         required
         onChange={handleChange}
       />
-      <button type="submit">DisplayName</button>
-      <input
-        type="text"
-        name="displayName"
-        value={formData.displayName}
-        required
-        onChange={handleChange}
-      />
+      <br />
+      <Link to="/">
+        <button type="submit">Submit</button>
+      </Link>
     </form>
   );
 }
