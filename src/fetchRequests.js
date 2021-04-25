@@ -20,10 +20,10 @@ export const logoutRequest = (token) => {
 export const createUserRequest = (username, password) => {
   return fetch(baseURL + "/user/create", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username,
-      password,
+      username: username,
+      password: password,
     }),
   }).then((res) => console.log(res));
 };
@@ -78,7 +78,7 @@ export const getSingleTodo = (userId, todoId) => {
   }).then((res) => res.json());
 };
 
-export const createTodo = (userId, title, key) => {
+export const createTodo = (userId, title) => {
   return fetch(baseURL + `/user/${userId}/todos/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

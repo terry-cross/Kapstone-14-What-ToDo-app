@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CreateUser from "./CreateUser";
+import { useHistory } from "react-router-dom";
 import { loginRequest } from "../fetchRequests";
 import { LOGIN, useStore } from "../store";
 
 function Login(props) {
   const dispatch = useStore((state) => state.dispatch);
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -17,6 +19,7 @@ function Login(props) {
     loginRequest(formData.username, formData.password).then((userData) =>
       dispatch({ type: LOGIN, payload: userData.id })
     );
+    history.push("/todo");
   };
 
   const handleChange = (e) => {
@@ -62,16 +65,16 @@ function Login(props) {
             required
             onChange={handleChange}
           />
-          <Link to="/todo">
-            <button
-              style={{
-                marginLeft: 10 + "px",
-              }}
-              type="submit"
-            >
-              Login
-            </button>
-          </Link>
+          {/* <Link to="/todo"> */}
+          <button
+            style={{
+              marginLeft: 10 + "px",
+            }}
+            type="submit"
+          >
+            Login
+          </button>
+          {/* </Link> */}
         </form>
         {/* <button
           style={{

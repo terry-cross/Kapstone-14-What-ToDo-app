@@ -19,6 +19,8 @@ function TodoList(props) {
             completed={todo.completed}
             id={todo.id}
             key={todo.id}
+            handleCheck={props.handleCheck}
+            handleDelete={props.handleDelete}
           />
         ))}
       </ul>
