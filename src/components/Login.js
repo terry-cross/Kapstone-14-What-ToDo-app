@@ -7,6 +7,7 @@ import { LOGIN, useStore } from "../store";
 
 function Login(props) {
   const dispatch = useStore((state) => state.dispatch);
+  const user = useStore((state) => state.user);
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -16,9 +17,9 @@ function Login(props) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    loginRequest(formData.username, formData.password).then((userData) =>
-      dispatch({ type: LOGIN, payload: userData.id })
-    );
+    loginRequest(formData.username, formData.password)
+      .then((userData) => dispatch({ type: LOGIN, payload: userData.id }))
+      .then(localStorage.setItem("userId", user.userId));
     history.push("/todo");
   };
 

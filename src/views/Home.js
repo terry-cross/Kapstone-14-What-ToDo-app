@@ -23,12 +23,24 @@ const footerStyles = {
 };
 function Home(props) {
   const user = useStore((state) => state.user);
+  const userId = localStorage.getItem("userId");
   const [userTodos, setUserTodos] = useState([]);
   const dispatch = useContext(TodosDispatch);
   const [input, setInput] = useState("");
 
+  const [percentage, setPercentage] = useState(
+    userTodos.filter((todo) => !todo.completed).length / userTodos.length
+  );
+
   useEffect(() => {
-    getUserTodos(user.userId).then((data) => setUserTodos(data));
+    setPercentage(
+      (userTodos.filter((todo) => todo.completed).length / userTodos.length) *
+        100
+    );
+  }, [userTodos]);
+
+  useEffect(() => {
+    getUserTodos(userId).then((data) => setUserTodos(data));
   }, []);
 
   useEffect(() => {
@@ -41,31 +53,33 @@ function Home(props) {
 
   function keyDown(event) {
     if (event.key === "Enter") {
-      createTodo(user.userId, event.target.value)
+      createTodo(userId, event.target.value)
         .then(setInput(""))
-        .then(getUserTodos(user.userId).then((data) => setUserTodos(data)));
+        .then(getUserTodos(userId).then((data) => setUserTodos(data)));
     }
   }
 
   const handleInput = (event) => {
-    setInput(event.target.value);
+    setInput(event.target.value).then(
+      getUserTodos(userId).then((data) => setUserTodos(data))
+    );
   };
 
   const handleCheck = (event, todoId, title, completed) => {
-    editTodo(user.userId, todoId, title, "", !completed).then(
-      getUserTodos(user.userId).then((data) => setUserTodos(data))
+    editTodo(userId, todoId, title, "", !completed).then(
+      getUserTodos(userId).then((data) => setUserTodos(data))
     );
   };
 
   const handleDelete = (event, todoId) => {
-    deleteTodo(user.userId, todoId).then(
-      getUserTodos(user.userId).then((data) => setUserTodos(data))
+    deleteTodo(userId, todoId).then(
+      getUserTodos(userId).then((data) => setUserTodos(data))
     );
   };
 
   return (
     <>
-      {user.userId === "" ? (
+      {userId === "" ? (
         <div>Loading ...</div>
       ) : (
         <div class="d-inline-flex p-5 bg-secondary text-black">
@@ -99,10 +113,7 @@ function Home(props) {
                 handleDelete={handleDelete}
               />
             </div>
-            {/* <ProgressBar animated now={60} />
-        <ProgressBar variant = "success" animated now={40} />
-        <ProgressBar variant =  "danger" animated now={30} />
-        <ProgressBar variant =  "warning" animated now={50} /> */}
+            <ProgressBar animated now={percentage} />
             <img src={logo} alt="loading..." width={400} />
           </section>
         </div>
