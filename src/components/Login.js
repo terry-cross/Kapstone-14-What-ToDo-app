@@ -4,6 +4,16 @@ import CreateUser from "./CreateUser";
 import { useHistory } from "react-router-dom";
 import { loginRequest } from "../fetchRequests";
 import { LOGIN, useStore } from "../store";
+import {
+  Container,
+  Form,
+  // Col,
+  Row,
+  // Jumbotron,
+  Button,
+  FormGroup,
+  ListGroup,
+} from "react-bootstrap";
 
 function Login(props) {
   const dispatch = useStore((state) => state.dispatch);
@@ -46,37 +56,72 @@ function Login(props) {
 
   return (
     <>
-      <div>
-        <form id="login-form" onSubmit={handleLogin}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            autoFocus
-            required
-            onChange={handleChange}
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            required
-            onChange={handleChange}
-          />
+      <Container>
+        <div class="d-flex p4 bg-warning text-dark">
+          <Row>
+            <Form.Group>
+              <form id="login-form" onSubmit={handleLogin}>
+                <Form.Label>
+                  <Row>
+                    <label htmlFor="username">
+                      <h3>Username</h3>
+                    </label>
+                  </Row>
+                </Form.Label>
+                <Form.Row>
+                  {/* <Form.Control placeholder="Enter Username"> */}
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter Username"
+                    value={formData.username}
+                    autoFocus
+                    required
+                    onChange={handleChange}
+                  />
+                </Form.Row>
+                {/* </Form.Control> */}
+                <Form.Row>
+                  <Form.Label>
+                    <label htmlFor="password">
+                      <h3>Password</h3>
+                    </label>
+                  </Form.Label>
+                </Form.Row>
+                {/* <Form.Control placeholder="Enter Password"> */}
+                <Form.Row>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    value={formData.password}
+                    required
+                    onChange={handleChange}
+                  />
+                </Form.Row>
+                {/* </Form.Control> */}
+                <button
+                  class="btn btn-lg"
+                  style={{
+                    background: "blue",
+                    color: "white",
+                  }}
+                  type="submit"
+                >
+                  Login
+                </button>
+              </form>
+            </Form.Group>
+          </Row>
+        </div>
+
+        <div class="d-inline-flex p4 justify-content-center bg-secondary text-white">
+          <div className="logInBtn"></div>
           {/* <Link to="/todo"> */}
-          <button
-            style={{
-              marginLeft: 10 + "px",
-            }}
-            type="submit"
-          >
-            Login
-          </button>
+
           {/* </Link> */}
-        </form>
-        {/* <button
+
+          {/* <button
           style={{
             marginLeft: 10 + "px",
           }}
@@ -84,16 +129,20 @@ function Login(props) {
         >
           Google Login
         </button> */}
-        <Link to="/createUser">
-          <button
-            style={{
-              marginLeft: 10 + "px",
-            }}
-          >
-            Create User
-          </button>
-        </Link>
-      </div>
+
+          <Link to="/createUser">
+            <button
+              class="btn btn-lg"
+              style={{
+                background: "green",
+                color: "white",
+              }}
+            >
+              Create User
+            </button>
+          </Link>
+        </div>
+      </Container>
     </>
   );
 }

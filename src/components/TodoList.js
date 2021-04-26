@@ -7,7 +7,14 @@ function TodoList(props) {
   return (
     <section className="main">
       <Link to={"/profile"}>
-        <p style={{ position: "relative", left: "25px", bottom: "175px", color: "white" }}>
+        <p
+          style={{
+            position: "relative",
+            left: "25px",
+            bottom: "175px",
+            color: "white",
+          }}
+        >
           Profile
         </p>
       </Link>
@@ -22,16 +29,6 @@ function TodoList(props) {
             handleCheck={props.handleCheck}
             handleDelete={props.handleDelete}
           />
-
-          {Link}
-          <p>
-            style={(
-              position: "relative",
-              right: ""
-              bottom: ""
-              color: "white"
-            )}
-          </p>
         ))}
       </ul>
     </section>
