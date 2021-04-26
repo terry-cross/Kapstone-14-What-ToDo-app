@@ -7,9 +7,7 @@ import { LOGIN, useStore } from "../store";
 import {
   Container,
   Form,
-  // Col,
   Row,
-  // Jumbotron,
   Button,
   FormGroup,
   ListGroup,
@@ -57,49 +55,52 @@ function Login(props) {
   return (
     <>
       <Container>
-        <div class="d-flex p4 bg-warning text-dark">
-          <Row>
+        <form id="login-form" onSubmit={handleLogin}>
+          <div class="d-flex pb-4 bg-warning text-dark">
             <Form.Group>
-              <form id="login-form" onSubmit={handleLogin}>
+              <Form.Label>
+                <Row>
+                  <label htmlFor="username">
+                    <h3>Username</h3>
+                  </label>
+                </Row>
+              </Form.Label>
+              <Form.Row>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Enter Username"
+                  value={formData.username}
+                  autoFocus
+                  required
+                  onChange={handleChange}
+                />
+              </Form.Row>
+
+              <Form.Row>
                 <Form.Label>
-                  <Row>
-                    <label htmlFor="username">
-                      <h3>Username</h3>
-                    </label>
-                  </Row>
+                  <label htmlFor="password">
+                    <h3>Password</h3>
+                  </label>
                 </Form.Label>
-                <Form.Row>
-                  {/* <Form.Control placeholder="Enter Username"> */}
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder="Enter Username"
-                    value={formData.username}
-                    autoFocus
-                    required
-                    onChange={handleChange}
-                  />
-                </Form.Row>
-                {/* </Form.Control> */}
-                <Form.Row>
-                  <Form.Label>
-                    <label htmlFor="password">
-                      <h3>Password</h3>
-                    </label>
-                  </Form.Label>
-                </Form.Row>
-                {/* <Form.Control placeholder="Enter Password"> */}
-                <Form.Row>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    value={formData.password}
-                    required
-                    onChange={handleChange}
-                  />
-                </Form.Row>
-                {/* </Form.Control> */}
+              </Form.Row>
+
+              <Form.Row>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter Password"
+                  value={formData.password}
+                  required
+                  onChange={handleChange}
+                />
+              </Form.Row>
+            </Form.Group>
+          </div>
+
+          <Form.Row>
+            <div class="d-inline-flex p4 justify-content-center bg-secondary text-white">
+              <div className="logInBtn">
                 <button
                   class="btn btn-lg"
                   style={{
@@ -110,39 +111,22 @@ function Login(props) {
                 >
                   Login
                 </button>
-              </form>
-            </Form.Group>
-          </Row>
-        </div>
-
-        <div class="d-inline-flex p4 justify-content-center bg-secondary text-white">
-          <div className="logInBtn"></div>
-          {/* <Link to="/todo"> */}
-
-          {/* </Link> */}
-
-          {/* <button
-          style={{
-            marginLeft: 10 + "px",
-          }}
-          onClick={googleLogin}
-        >
-          Google Login
-        </button> */}
-
-          <Link to="/createUser">
-            <button
-              class="btn btn-lg"
-              style={{
-                background: "green",
-                color: "white",
-              }}
-            >
-              Create User
-            </button>
-          </Link>
-        </div>
-      </Container>
+              </div>
+              <Link to="/createUser">
+                <button
+                  class="btn btn-lg"
+                  style={{
+                    background: "green",
+                    color: "white",
+                  }}
+                >
+                  Create User
+                </button>
+              </Link>
+            </div>
+          </Form.Row>
+        </form>
+      </Container>{" "}
     </>
   );
 }
