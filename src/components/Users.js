@@ -1,10 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { getAllUsers } from "../fetchRequests";
 
-const sampleUsers = ["Brandon", "Jared", "Terry", "dawit"];
 function Users() {
-  const [user, setUser] = useState(sampleUsers);
+  const [user, setUser] = useState([]);
   const [search, setSearch] = useState("");
   const [res, setRes] = useState([]);
+
+  useEffect(() => {
+    getAllUsers().then((data) => (setUser(data), setRes(data)));
+  }, []);
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+    if (e.target.value !== "") {
+      let test = user.filter((users) => {
+        return (
+          users.username.toLowerCase().includes(search.toLowerCase()) ||
+          users.firstName.toLowerCase().includes(search.toLowerCase()) ||
+          users.lastName.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setRes(test);
+    }
+  };
   return (
     <div>
       <form onSubmit={(e) => e.preventDefault()}>
@@ -12,21 +31,22 @@ function Users() {
           type="search"
           className="test"
           placeholder="Search for users"
-          onChange={(e) => {
-            const test = user.filter((user) => {
-              return user.toLowerCase().includes(e.target.value.toLowerCase());
-            });
-            console.log(test);
-            setRes(test);
-            if (e.target.value === "") setRes([]);
-          }}
+          onChange={(e) => handleInput(e)}
+          value={search}
         />
       </form>
-      <div>
-        {user.map((sampleUsers) => {
-          <p>{setUser}</p>;
+      <ul>
+        {res.map((users) => {
+          return (
+            <li key={users.id}>
+              <p>{users.username}</p>
+              <p>
+                {users.firstName} {users.lastName}
+              </p>
+            </li>
+          );
         })}
-      </div>
+      </ul>
     </div>
   );
 }
