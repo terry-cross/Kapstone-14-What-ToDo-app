@@ -7,6 +7,7 @@ import TodoList from "./components/TodoList";
 import Home from "./views/Home";
 import LoginPage from "./views/LoginPage";
 import { useStore } from "./store";
+import Users from "./components/Users";
 
 export const TodosDispatch = createContext(null);
 
@@ -23,12 +24,14 @@ function App() {
           component={Home}
           render={(props) => <TodoList {...props} />}
         />
+        <Route exactpath="/users" component={Users} />
         <Route
           exact
           path="/:filter"
           render={(props) => <TodoList {...props} />}
         />
-        <Route path="/profile" component={Profile} />
+
+        {/* <Route path="/profile/:userId" component={Profile} /> */}
       </Switch>
     </TodosDispatch.Provider>
   );
