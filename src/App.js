@@ -1,11 +1,9 @@
 import "./App.css";
 import { useReducer, useEffect, createContext, Profiler } from "react";
 import { Switch, Route } from "react-router-dom";
-
+import Header from "./components/Header";
 import Profile from "./views/Profile";
 import TodoList from "./components/TodoList";
-import Footer from "./components/Footer";
-import Login from "./components/Login";
 import Home from "./views/Home";
 import LoginPage from "./views/LoginPage";
 import { useStore } from "./store";
@@ -16,6 +14,7 @@ function App() {
   const dispatch = useStore((state) => state.dispatch);
   return (
     <TodosDispatch.Provider value={dispatch}>
+      <Header />
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route
@@ -29,7 +28,7 @@ function App() {
           path="/:filter"
           render={(props) => <TodoList {...props} />}
         />
-        {/* <Route path="/profile/:userId" component={Profile} /> */}
+        <Route path="/profile" component={Profile} />
       </Switch>
     </TodosDispatch.Provider>
   );

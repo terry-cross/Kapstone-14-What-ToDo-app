@@ -10,6 +10,12 @@ function Login(props) {
   const user = useStore((state) => state.user);
   const history = useHistory();
 
+  // useEffect(() => {
+  //   if (localStorage.getItem("userId") !== null) {
+  //     history.push("/todo");
+  //   }
+  // }, []);
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",

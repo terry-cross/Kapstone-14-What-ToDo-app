@@ -1,11 +1,8 @@
-import React, { useImperativeHandle } from "react";
-import { useState, useEffect, useContext } from "react";
-import { Switch, Route } from "react-router-dom";
-
+import React from "react";
+import { useState, useEffect } from "react";
 import logo from "../images/worklogo2.gif";
 import { ProgressBar } from "react-bootstrap";
 import TodoList from "../components/TodoList";
-import TodosDispatch from "../App";
 import Footer from "../components/Footer";
 import {
   createTodo,
@@ -13,19 +10,15 @@ import {
   editTodo,
   deleteTodo,
 } from "../fetchRequests";
-import { useStore } from "../store";
 
 const styles = {
   fontFamily: "Impact",
 };
-const footerStyles = {
-  background: "lightblue",
-};
-function Home(props) {
-  const user = useStore((state) => state.user);
+
+function Home() {
   const userId = localStorage.getItem("userId");
   const [userTodos, setUserTodos] = useState([]);
-  const dispatch = useContext(TodosDispatch);
+
   const [input, setInput] = useState("");
 
   const [percentage, setPercentage] = useState(
@@ -60,21 +53,18 @@ function Home(props) {
   }
 
   const handleInput = (event) => {
-    setInput(event.target.value).then(
-      getUserTodos(userId).then((data) => setUserTodos(data))
-    );
+    setInput(event.target.value);
+    getUserTodos(userId).then((data) => setUserTodos(data));
   };
 
   const handleCheck = (event, todoId, title, completed) => {
-    editTodo(userId, todoId, title, "", !completed).then(
-      getUserTodos(userId).then((data) => setUserTodos(data))
-    );
+    editTodo(userId, todoId, title, "", !completed);
+    getUserTodos(userId).then((data) => setUserTodos(data));
   };
 
   const handleDelete = (event, todoId) => {
-    deleteTodo(userId, todoId).then(
-      getUserTodos(userId).then((data) => setUserTodos(data))
-    );
+    deleteTodo(userId, todoId);
+    getUserTodos(userId).then((data) => setUserTodos(data));
   };
 
   return (
