@@ -1,8 +1,14 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getProfile } from "../fetchRequests";
 
 const Profiles = () => {
+  const [user, setUser] = useState({});
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    getProfile(userId).then((data) => setUser(data));
+  }, []);
   return (
     <div id="main" style={{ backgroundColor: "black", width: "100%" }}>
       <div
@@ -11,11 +17,9 @@ const Profiles = () => {
           justifyContent: "space around",
           margin: "180px 0px",
           borderBottom: "1px solid grey ",
+          color: "white",
         }}
       >
-        <Link to="/todo">
-          <p>Back to todos</p>
-        </Link>
         <div>
           <img
             style={{ width: "160px", height: "160px", borderRadius: "80px" }}
@@ -23,7 +27,7 @@ const Profiles = () => {
           />
         </div>
         <div>
-          <h4>Username Here</h4>
+          <h4>{user.username}</h4>
           <Link to="/editprofile">
             <p>Edit profile</p>
           </Link>
@@ -38,11 +42,29 @@ const Profiles = () => {
               <h5>Todos Completed:</h5>
               <h5 style={{ position: "relative", top: "76px", right: "105px" }}>
                 Todos on List:
+                <ul>
+                  {user.todos &&
+                    user.todos.map((todo) => (
+                      <li key={todo.id}>
+                        <p>{todo.title}</p>
+                      </li>
+                    ))}
+                </ul>
               </h5>
               <h5
                 style={{ position: "relative", top: "156px", right: "185px" }}
               >
                 Todos not Completed:
+                <ul>
+                  {user.todos &&
+                    user.todos
+                      .filter((todo) => !todo.completed)
+                      .map((todo) => (
+                        <li key={todo.id}>
+                          <p>{todo.title}</p>
+                        </li>
+                      ))}
+                </ul>
               </h5>
             </div>
           </div>

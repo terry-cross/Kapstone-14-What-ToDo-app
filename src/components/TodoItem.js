@@ -1,9 +1,4 @@
-import { useContext } from "react";
-import { TodosDispatch } from "../App";
-
 function TodoItem(props) {
-  const dispatch = useContext(TodosDispatch);
-
   return (
     <li className={props.completed ? "completed" : ""}>
       <div className="view">

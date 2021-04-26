@@ -1,11 +1,8 @@
-import React, { useImperativeHandle } from "react";
-import { useState, useEffect, useContext } from "react";
-import { Switch, Route } from "react-router-dom";
-
+import React from "react";
+import { useState, useEffect } from "react";
 import logo from "../images/worklogo2.gif";
 import { ProgressBar } from "react-bootstrap";
 import TodoList from "../components/TodoList";
-import TodosDispatch from "../App";
 import Footer from "../components/Footer";
 import {
   createTodo,
@@ -13,22 +10,30 @@ import {
   editTodo,
   deleteTodo,
 } from "../fetchRequests";
-import { useStore } from "../store";
 
 const styles = {
   fontFamily: "Impact",
 };
-const footerStyles = {
-  background: "lightblue",
-};
-function Home(props) {
-  const user = useStore((state) => state.user);
+
+function Home() {
+  const userId = localStorage.getItem("userId");
   const [userTodos, setUserTodos] = useState([]);
-  const dispatch = useContext(TodosDispatch);
+
   const [input, setInput] = useState("");
 
+  const [percentage, setPercentage] = useState(
+    userTodos.filter((todo) => !todo.completed).length / userTodos.length
+  );
+
   useEffect(() => {
-    getUserTodos(user.userId).then((data) => setUserTodos(data));
+    setPercentage(
+      (userTodos.filter((todo) => todo.completed).length / userTodos.length) *
+        100
+    );
+  }, [userTodos]);
+
+  useEffect(() => {
+    getUserTodos(userId).then((data) => setUserTodos(data));
   }, []);
 
   useEffect(() => {
@@ -41,31 +46,30 @@ function Home(props) {
 
   function keyDown(event) {
     if (event.key === "Enter") {
-      createTodo(user.userId, event.target.value)
+      createTodo(userId, event.target.value)
         .then(setInput(""))
-        .then(getUserTodos(user.userId).then((data) => setUserTodos(data)));
+        .then(getUserTodos(userId).then((data) => setUserTodos(data)));
     }
   }
 
   const handleInput = (event) => {
     setInput(event.target.value);
+    getUserTodos(userId).then((data) => setUserTodos(data));
   };
 
   const handleCheck = (event, todoId, title, completed) => {
-    editTodo(user.userId, todoId, title, "", !completed).then(
-      getUserTodos(user.userId).then((data) => setUserTodos(data))
-    );
+    editTodo(userId, todoId, title, "", !completed);
+    getUserTodos(userId).then((data) => setUserTodos(data));
   };
 
   const handleDelete = (event, todoId) => {
-    deleteTodo(user.userId, todoId).then(
-      getUserTodos(user.userId).then((data) => setUserTodos(data))
-    );
+    deleteTodo(userId, todoId);
+    getUserTodos(userId).then((data) => setUserTodos(data));
   };
 
   return (
     <>
-      {user.userId === "" ? (
+      {userId === "" ? (
         <div>Loading ...</div>
       ) : (
         <div class="d-inline-flex p-5 bg-secondary text-black">
@@ -99,10 +103,7 @@ function Home(props) {
                 handleDelete={handleDelete}
               />
             </div>
-            {/* <ProgressBar animated now={60} />
-        <ProgressBar variant = "success" animated now={40} />
-        <ProgressBar variant =  "danger" animated now={30} />
-        <ProgressBar variant =  "warning" animated now={50} /> */}
+            <ProgressBar animated now={percentage} />
             <img src={logo} alt="loading..." width={400} />
           </section>
         </div>

@@ -15,7 +15,14 @@ import {
 
 function Login(props) {
   const dispatch = useStore((state) => state.dispatch);
+  const user = useStore((state) => state.user);
   const history = useHistory();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("userId") !== null) {
+  //     history.push("/todo");
+  //   }
+  // }, []);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -24,9 +31,9 @@ function Login(props) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    loginRequest(formData.username, formData.password).then((userData) =>
-      dispatch({ type: LOGIN, payload: userData.id })
-    );
+    loginRequest(formData.username, formData.password)
+      .then((userData) => dispatch({ type: LOGIN, payload: userData.id }))
+      .then(localStorage.setItem("userId", user.userId));
     history.push("/todo");
   };
 
